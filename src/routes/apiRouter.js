@@ -10,4 +10,6 @@ const apiRouter = new Router();
 
 //apiRouter.get('/droptable', apiController?.dropTable);
 
+apiRouter.get('/test', apiController?.test);
+
 export default apiRouter

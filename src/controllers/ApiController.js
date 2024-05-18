@@ -102,6 +102,42 @@ class ApiController {
 
   }
 
+  test = async (req, res) => {
+
+    try {
+
+      return res.json({ error: false, data: req });
+
+    } catch (error) {
+
+      console.log(error);
+
+      if (error?.issues) {
+
+        const zodErrorData = JSON.parse(error?.message).map((errorMessage) => {
+
+          if (errorMessage.message) return { message: `"${errorMessage?.path}" is ${errorMessage?.message}` };
+
+        })
+
+        return res.json({ error: true, data: zodErrorData[0]?.message });
+
+      } else {
+
+        console.log(error?.message.fields);
+
+        if (error?.message?.fields) return res.json({ error: true, data: error?.message.fields?.message });
+
+        if (error?.message.fields) return res.json({ error: true, data: error?.message.fields?.message });
+
+        return res.json({ error: true, data: error?.message });
+
+      }
+
+    }
+
+  }
+
 }
 
 export default ApiController
